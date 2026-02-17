@@ -1,0 +1,82 @@
+<section>
+	<br><br><br>
+	<h1>JavaScript</h1>
+	<h2>L'héritage</h2>
+</section>
+
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>L'héritage</h4>
+    <p>Supposons avoir une classe <code>Date</code></p>
+    <pre><code data-trim data-noescape class="language-javascript">
+        class Date {
+            constructor(year, month, day){
+                this.year = year;
+                this.month = month;
+                this.day = day;
+            }
+            toText(){
+                return `${this.day}.${this.month}.${this.year}`;
+            }
+            print(){
+                console.log(`Valeur actuelle : ${this.toText()}`)
+            }
+        }
+    </code></pre>
+    <p>
+        On souhaite maintenant créer une deuxième classe <code>DateTime</code>, stockant en plus l'heure.
+        Il serait bien de pouvoir réutiliser la classe <code>Date</code>, sans devoir réimplémenter tout son contenu.
+    </p>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>L'héritage</h4>
+    <p>JavaScript permet de le faire de la manière suivante</p>
+    <pre><code data-trim data-noescape class="language-javascript">
+        class DateTime extends Date {    // Le mot clé "extends" indique l'héritage
+            constructor(year, month, day, hours, minutes, seconds){
+                super(year, month, day) // "super" est le constructeur de la classe parente
+                this.hours = hours;
+                this.minutes = minutes;
+                this.seconds = seconds;
+            }
+            toText(){
+                // "super" permet également d'appeler des fonctions de la classe parente
+                return super.toText() + ` ${this.hours}:${this.minutes}:${this.seconds}`
+            }
+        }
+    </code></pre>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>L'héritage</h4>
+    <p>On aura donc le comportement suivant</p>
+    <pre><code data-trim data-noescape class="language-javascript">
+        const date = new Date(2010, 11, 12);
+        console.log(date.toText()) // 12.11.2010
+        date.print(); // affiche : Valeur actuelle : 12.11.2010
+
+        const dateTime = new DateTime(2020, 10, 25, 22, 35, 45);
+        console.log(dateTime.toText()) // 25.10.2020 22:35:45
+        dateTime.print(); // affiche : Valeur actuelle : 25.10.2020 22:35:45
+    </code></pre>
+    <p>
+        A noter :
+        <ul>
+            <li>Les méthodes et attributs de la classe parente sont disponibles dans la classe enfant. <br>Un <code>DateTime</code> peut appeler <code>print()</code> définit dans la classe <code>Date</code>.</li>
+            <li>La classe enfant peut "écraser" les fonctions de la classe parente. <br><code>DateTime</code> redéfinit la fonction <code>toText</code>, pour y inclure l'heure</li>
+            <ul>
+                <li>Dans ce cas <code>print()</code> appellera bien <code>toText()</code> de la classe enfant, même si <code>print()</code> n'est jamais définit dans la classe <code>DateTime</code></li>
+            </ul>
+        </ul>
+    </p>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>L'héritage</h4>
+    <p>Comment choisir entre héritage et attribut ?</p>
+</section>

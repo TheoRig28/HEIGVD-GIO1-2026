@@ -1,0 +1,153 @@
+<section>
+	<br><br><br>
+	<h1>JavaScript</h1>
+	<h2>Les promesses</h2>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>Les promesses</h4>
+    <p>Considérons l'exemple suivant, qui décrit à grands traits le chargement d'une carte</p>
+    <pre><code data-trim data-noescape class="language-javascript">
+        load_map_tiles();           // Chargement de la carte, prenant quelques secondes
+        complex_computations();  // Calculs complexes, prenant aussi quelques secondes
+        // La carte est prête, on peut interagir avec l'application
+    </code></pre>
+    <p>
+        Le JavaScript s'exécutant ligne après ligne, tant que les trois fonctions ne se sont pas exécutées, aucun autre code JavaScript ne s'exécutera.
+        La page sera "gelée", ne réagissant pas tant que la carte ne sera pas prête. Cela est très désagréable pour la personne utilisant la page web.
+    </p>
+    <p>
+        On aimerait une solution où les opérations longues ne figent pas la page, c'est à dire où ces opérations s'exécutent <i>en parallèle</i> du reste du programme.
+        On appelle également cela une <i>exécution asynchrone</i>.
+    </p>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>Les promesses</h4>
+    <p>Les promesses nous permettent de faire cela</p>
+    <pre><code data-trim data-noescape class="language-javascript">
+        new Promise(() => {  // Création d'une promesse, retourne instantanément
+            load_map_tiles();
+            complex_computations();
+        });
+        // La carte est prête, on peut interagir avec l'application
+    </code></pre>
+    <p>
+        Une <code>Promise</code> est un objet prenant en paramètre une fonction. Cette fonction s'exécutera <i>en parallèle</i> du reste du code. <br>
+        La création d'une promesse ne prend presque aucun temps, dans l'exemple ci-dessus on pourra interagir avec la carte immédiatement. <br>
+        Le contenu de la promesse s'exécutera plus tard, à un moment indéterminé.
+    </p>
+</section>
+
+
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>Les promesses</h4>
+    <p>Attention, les promesses ne sont pas magiques</p>
+    <pre><code data-trim data-noescape class="language-javascript">
+        let result;
+        new Promise(() => {
+            result = complex_computations();
+        });
+        console.log(result);
+        // Reste du code
+    </code></pre>
+    <p>
+        Ce code affichera instantanément <code>undefined</code>, car au moment du <code>console.log</code>, <code>result</code> n'est pas encore assigné. La promesse n'a pas eu le temps de s'exécuter. <br>
+        <b>Il est très mauvais d'utiliser après une promesse une valeur qui y est calculée, car on ne sait jamais si la promesse s'est exécutée ou non.</b>
+    </p>
+    <p>Pire encore : si on utilise <code>result</code> plus bas dans le code, il pourra y avoir une valeur parfois oui, parfois non, suivant si la promesse s'est déjà exécutée ou non</p>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>Les promesses</h4>
+    <p>De même, ceci est faux</p>
+    <pre><code data-trim data-noescape class="language-javascript">
+        let result;
+        new Promise(() => {
+            result = complex_computations();
+        });
+        while(result == undefined){} // Ne jamais attendre avec une boucle
+        console.log(result);
+        // Reste du code
+    </code></pre>
+    <p>
+        Ce code est valide, mais rend la promesse inutile, car on attend qu'elle soit résolue en bloquant l'exécution du programme. <br>
+        Il ne faut jamais bloquer l'exécution du JavaScript de la sorte.
+    </p>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>Les promesses</h4>
+    <p>Pour résoudre ce problème on peut soit placer le <code>console.log</code> dans la promesse, soit utiliser sa fonction <code>then</code></p>
+    <pre><code data-trim data-noescape class="language-javascript">
+        let result;
+        new Promise(() => {
+            result = complex_computations();
+            console.log(result);
+        });
+        // Reste du code
+    </code></pre>
+    <pre><code data-trim data-noescape class="language-javascript">
+        let result;
+        const promesse = new Promise(() => {result = complex_computations();} );
+        promesse.then(() => console.log(result) )
+        // Reste du code
+    </code></pre>
+    <p>
+        La fonction <code>then</code> prend en paramètre une fonction à exécuter lorsque la promesse sera <i>résolue</i>, c'est à dire exécutée jusqu'au bout.<br>
+        Évidemment, l'affichage ne se fera pas immédiatement, mais seulement quand <code>complex_computations()</code> aura fini sont exécution.
+    </p>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>Les promesses</h4>
+    <p>
+        Il est très courant de définir des fonctions retournant des promesses. 
+        C'est le cas de toutes les opérations qui peuvent prendre du temps : chargement de fichier distant, calcul complexe, traitement de grande quantité de données, etc. <br>
+        C'est aussi le cas de fonctions de l'API de base en JavaScript, comme <code>fetch</code>
+    </p>
+    <pre style="width:100%"><code data-trim data-noescape class="language-javascript">
+        const url = "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swisssurface3d"
+        // Récupère le fichier à l'URL indiquée, dans une promesse
+        const requestPromise = fetch(url)
+
+        // Quand la promesse qui récupère la requête est résolue, elle retourne une seconde promesse
+        // Cette seconde promesse sert à transformer le texte en objet JSON
+        const dataPromise = requestPromise.then(request => request.json())
+
+        // Finalement, quand cette seconde promesse est résolue, on affiche le résultat
+        dataPromise.then(data => console.log(data))
+
+        // Le code se trouvant ici ne sera pas bloqué pas les requêtes au dessus
+        ...
+    </code></pre>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>Les promesses</h4>
+    <p>On écrira typiquement ce type de fonction</p>
+    <pre style="width:100%"><code data-trim data-noescape class="language-javascript">
+        // Fonction isolant le titre d'un jeu de donnée chargé depuis une adresse externe
+        function get_data_title(url){
+            return new Promise( process_title => { // Cette fonction ne fait que retourner une promesse
+                return fetch(url)
+                    .then(request => request.json())
+                    .then(data => process_title(data['title']))
+            })
+        }
+
+        const url = "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swisssurface3d"
+        get_data_title(url).then(title => console.log("Titre : " + title))
+        // Affichera "Titre : swissSURFACE3D Raster, the digital surface model of Switzerland"
+
+        // Et le reste du code ne sera pas bloqué par toutes ces opérations
+    </code></pre>
+</section>

@@ -1,0 +1,1 @@
+(cd ./reveal.js/ ; npm x -c "decktape automatic http://127.0.0.1:8080 slides.pdf")

@@ -1,0 +1,253 @@
+<section>
+	<br><br><br>
+	<h1>JavaScript</h1>
+	<h2>Rappels</h2>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>Les fonctions</h4>
+    <p>
+        Les fonctions se déclarent avec le mot-clé <code>function</code>
+        <pre><code data-trim data-noescape class="language-javascript">
+            function add(a, b){
+                return a+b;
+            }
+            console.log(add(2,3)); // 5
+        </code></pre>
+    </p>
+    <p>
+        En JavaScript, les fonctions sont des objets, qui peuvent être stockés dans des variables
+        <pre><code data-trim data-noescape class="language-javascript">
+            const add = function (a, b){
+                return a+b;
+            };
+            console.log(add(2,3)); // 5
+        </code></pre>
+    </p>
+    <p>
+        On les appelle alors <i>fonctions anonymes</i>, car elles peuvent ne pas porter de nom.
+    </p>
+    <aside class="notes">
+        En JS, les fonctions peuvent être déclarées en dessous de leur premier appel, cela n'a pas d'importance. On appelle cette propriété le <i>hoisting</i>. 
+    </aside>
+</section>
+
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>Les fonctions</h4>
+    <p>
+        Les fonctions anonymes permettent de passer des fonctions en paramètre d'autres fonctions
+        <pre><code data-trim data-noescape class="language-javascript">
+            const mul2 = function (a){return 2*a;}
+            const squared = function (a){return a*a;}
+
+            function apply(array, func){
+                const result = [];
+                for(const x of array){
+                    result.push(func(x));
+                }
+                return result;
+            }
+
+            console.log(apply([1,2,3,4], mul2)) // 2,4,6,8
+            console.log(apply([1,2,3,4], squared)) // 1,4,9,16
+        </code></pre>
+    <aside class="notes">
+        Utiliser la notation <code>mul2</code> indique d'utiliser la fonction elle-même <br>
+        Utiliser la notation <code>mul2(x)</code> appelle (execute) la fonction avec la valeur <code>x</code>
+    </aside>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>Les fonctions</h4>
+    <p>
+        Les <i>fonctions fléchées</i> (<i>arrow functions</i>) sont une notation encore plus compacte
+        <pre><code data-trim data-noescape class="language-javascript">
+            const add = (a, b) => {return a+b;};
+            console.log(add(2,3)); // 5
+        </code></pre>
+    </p><p>
+        Si la fonction n'est composée que d'un <code>return</code>, on peut omettre les accolades et le <code>return</code> :
+        <pre><code data-trim data-noescape class="language-javascript">
+            const add = (a, b) => a+b;
+            console.log(add(2,3)); // 5
+        </code></pre>
+    </p><p>
+        Toutes ces formes sont identiques, à l'exception de détails que nous n'aborderons pas dans ce cours
+    </p>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>Les fonctions</h4>
+    <p>
+        Les fonctions fléchées sont très utilisées en JavaScript, elles simplifient beaucoup l'écriture des fonctions.
+        <pre><code data-trim data-noescape class="language-javascript">
+            function apply(array, func){
+                const result = [];
+                for(const x of array){
+                    result.push(func(x));
+                }
+                return result;
+            }
+
+            console.log(apply([1,2,3,4], a => 2*a)) // 2,4,6,8
+            console.log(apply([1,2,3,4], a => a*a)) // 1,4,9,16
+        </code></pre>
+    </p>
+    <div class="fragment fade-in">
+         <p>En pratique, les tableaux possèdent une fonction <code>map</code> qui fait exactement l'effet de <code>apply</code> </p>
+        <pre><code data-trim data-noescape class="language-javascript">
+            console.log( [1,2,3,4].map(x => 2*x) ) // 2,4,6,8
+            console.log( [1,2,3,4].map(x => x*x) ) // 1,4,9,16
+        </code></pre>
+    </div>
+    <aside class="notes">
+        Si la fonction fléchée n'a qu'un paramètre, on peut même retirer les parenthèses autour du paramètre, comme dans l'exemple de cette slide.
+    </aside>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>Les fonctions - Ressources</h4>
+    <br>
+    <p>Documentation officielle : <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Functions">https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Functions</a></p>
+    <p>Tutoriel : <a href="https://www.w3schools.com/js/js_functions.asp">https://www.w3schools.com/js/js_functions.asp</a></p>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>Les objets</h4>
+    <p>En JavaScript un objet est un ensemble de propriétés qui possèdent une clé et une valeur</p>
+    <pre><code data-trim data-noescape class="language-javascript">
+        const myObject = {
+            cle1 : "val1",
+            cle2 : 35,
+            cle3 : x => 2*x
+        }
+    </code></pre>
+    <p>Il s'agit de l'équivalent des dictionnaires en Python</p>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>Les objets</h4>
+    <p>Les clés peuvent être lues ou modifiées avec une notation utilisant un point ou des crochets</p>
+    <pre><code data-trim data-noescape class="language-javascript">
+        const myObject = {
+            nombre: 8
+        };
+        console.log(myObject.nombre);       // 8
+        console.log(myObject['nombre']);    // 8
+        myObject.nombre = 9;                // Assigne 9
+        myObject['nombre'] = 9;             // Identique à la ligne précédente
+    </code></pre>
+    <p>Lire une clé qui n'existe pas retourne la valeur <code>undefined</code></p>
+    <p>Assigner une clé qui n'existe pas crée cette clé</p>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>Les objets</h4>
+    <p>On peut lister les clés d'un objet avec la boucle <code>for...in</code></p>
+    <pre><code data-trim data-noescape class="language-javascript">
+        const myObject = {
+            elem1: 8,
+            elem2: "A"
+        };
+        for(const elem in myObject){
+            console.log(elem + " : " + myObject[elem]);
+        }
+        // Affichera : 
+        // elem1 : 8
+        // elem2 : A
+    </code></pre>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>Les objets</h4>
+    <p>On peut définir des fonctions dans un objet de deux manières</p>
+    <pre><code data-trim data-noescape class="language-javascript">
+        const mesFonctions = {
+            mult2 : function(x){           // Manière 1 : Assigner une fonction à une propriété
+                return x*2;
+            },
+            mult3(x) {                     // Manière 2 : Directement écrire la fonction
+                return x*3;                //             sans le mot-clé function
+            }
+        };
+        console.log(mesFonctions.mult2(3)) // 6
+        console.log(mesFonctions.mult3(3)) // 9
+    </code></pre>
+    <p>Ces deux manières sont équivalentes</p>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>Les objets</h4>
+    <p>On appelle les variable stockées dans un objet des <i>attributs</i></p>
+    <p>On appelle les fonctions stockées dans un objet des <i>méthodes</i></p>
+    <pre><code data-trim data-noescape class="language-javascript">
+        const voiture = {
+            poids: 1400,                    // Attribut
+            marque: "BMW",                  // Attribut
+            couleur: "blanc",               // Attribut
+            sieges_chauffants: true,        // Attribut
+            start_moteur() { /* ... */},    // Méthode
+            stop_moteur() { /* ... */ },    // Méthode
+            marche_arriere() { /* ... */ }  // Méthode
+        };
+    </code></pre>
+    <div class="fragment fade-in">
+        <p>Comment faire si on souhaite créer plusieurs <i>voitures</i> dans notre programme sans se répéter ?</p>
+        <p>Comment faire pour que les méthodes d'un objet affectent ses attributs ?</p>
+    </div>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>L'orienté objet et les classes</h4>
+    <p>JavaScript permet de créer des constructeurs. Un constructeur est une fonction qui crée des objets</p>
+    <pre><code data-trim data-noescape class="language-javascript">
+        function Point(x,y){            // Point est un constructeur
+            this.x = x;
+            this.y = y;
+            this.display = () => console.log("("+this.x+";"+this.y+")");
+        }
+
+        const p = new Point(10, 20);    // Crée un objet nommé "p"
+        console.log(p.x);               // 10
+        p.display()                     // (10;20)
+    </code></pre>
+    <p>Le mot clé <code>this</code> dans le constructeur permet d'assigner une propriété à l'objet qui sera créé</p>
+    <p>Le mot clé <code>new</code> indique de créer un objet en utilisant le constructeur</p>
+</section>
+
+<section>
+	<h3>JavaScript</h3>
+	<h4>L'orienté objet et les classes</h4>
+    <p>
+        En JavaScript moderne, il existe un syntaxe plus proche des autres languages orientés objet.<br>
+        Nous utiliserons cette syntaxe, plus lisible pour des objets complexes
+    </p>
+    <pre><code data-trim data-noescape class="language-javascript">
+        class Point{
+            constructor(x,y){   // Le constructeur est une fonction qui se nomme toujours "constructor"
+                this.x = x;     // C'est cette fonction qui sera appelée avec "new"
+                this.y = y;
+            }
+            display(){
+                console.log("("+this.x+";"+this.y+")");
+            }
+        }
+        
+        const p = new Point(10, 20);    // Crée un objet nommé "p"
+        console.log(p.x);               // 10
+        p.display()                     // (10;20)
+    </code></pre>
+    <p>Les syntaxes de cette slides et la précédente sont équivalentes</p>
+</section>

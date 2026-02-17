@@ -1,0 +1,121 @@
+<section>
+	<br><br><br>
+	<h1>git</h1>
+	<h2>Rappels</h2>
+</section>
+
+<section>
+	<h3>git</h3>
+	<h4>Rappel</h4>
+	<br><br>
+	<p>
+		git est un outil de <i>versioning</i>, il permet de résoudre 3 problèmes de gestion de code :
+		<ol>
+			<li>Garder un historique des modifications et de l'évolution du code</li>
+			<li>Sauvegarder le code en lieu sûr</li>
+			<li>Collaborer facilement</li>
+		</ol>
+	</p>
+	<br><br>
+	<p>git est un logiciel open source, disponible sur tous les systèmes</p>
+	<aside class="notes">
+    	git est un incontournable du développement logiciel. C'est un programme open source utilisé partout dans le monde.
+		Il existe plusieurs alternatives à git (Perforce, Mercurial, etc) mais git est le plus utilisé, particulièrement dans le monde open-source.
+		Git gère tous les types de données textuelles, pas seulement du code. Des livres, des documentations, des configurations, des notes, etc peuvent très bien être des projets gérés par git. 
+		Par exemple, ces slides sont utilisent git et sont stockées sur GitHub.
+		En revanche git n'est pas fait pour gérer des fichiers compressés ou binaires, car ces derniers changent beaucoup d'une version à une autre.
+	</aside>
+</section>
+
+<section>
+	<h3>git</h3>
+	<h4>Notions de base</h4>
+	<br><br>
+	<p>
+		La notion fondamentale dans git est le <i>commit</i>. <br> 
+		Il s'agit d'un instantané de votre projet, un "point de sauvegarde" qui enregistre son état. <br>  
+		git permet de revenir, de comparer, de mélanger différents commits. <br>  
+		Ce qui se passe entre les commit n'est pas sauvegardé. <br>
+		git enregistre l'ordre des commit, qui sont liés les uns aux autres.
+		<img src="assets/git01.svg" width="100%">
+	</p>
+	<aside class="notes">
+    	Quand un commit est enregistré, git attribue un identifiant unique au commit et enregistre sa différence par rapport au commit précédent.
+		Tout est placé de manière transparente dans le dossier .git de votre projet. 
+	</aside>
+</section>
+
+<section>
+	<h3>git</h3>
+	<h4>Notions de base</h4>
+	<br>
+	<img src="assets/git02.svg">
+	<p>
+		Pour contribuer à un projet existant, on récupère le code sur un <i>dépôt</i> distant (<i>repository</i> en anglais). On dit que l'on <i>clone</i> un dépôt disant vers un dépôt local.
+		<br><br>
+		Depuis ce dépôt local, on fera des modifications sur le code, avec les commits associés.
+	</p>
+</section>
+
+<section>
+	<h3>git</h3>
+	<h4>Notions de base</h4>
+	<br>
+	<img src="assets/git04.svg">
+	<p>
+		Pour synchroniser nos changement avec le dépôt distant, on fera un <i>push</i>. Git va alors mettre à jour le dépôt distant avec nos nouvelles modifications.
+		<br><br>
+		Si de nouvelles modifications ont été faites dans le dépôt distant par une autre personne, on pourra les prendre à l'aide de la commande <i>pull</i>.
+	</p>
+</section>
+
+<section>
+	<h3>git</h3>
+	<h4>Workflow</h4>
+	<p>Les commandes principales</p>
+	<ul>
+		<li><code>git clone</code> récupère le code depuis une source distante</li>
+		<li><code>git add &lt;file&gt;</code> ajoute un fichier au prochain commit</li>
+		<li><code>git commit -m "&lt;message&gt;"</code> créé un commit avec son message associé</li>
+		<li><code>git push</code> envoie vos nouveaux commits dans le dépôt disant</li>
+		<li><code>git pull</code> récupère les nouveaux commits depuis le dépôt disant</li>
+	</ul>
+</section>
+
+<section>
+	<h3>GitHub</h3>
+	<h4>Les dépôts</h4>
+	<p>
+		GitHub est une plateforme en ligne qui permet d'héberger du code. Elle fournit un stockage pour des dépôts git.
+		<br><br>
+		Il existe d'autres alternatives, par exemple GitLab (hébergement de code en ligne), ou GitTea (hébergement à faire sois-même, <i>self-hosted</i>)
+	</p>
+	<img src="assets/git04.svg">
+	<br>
+	<aside class="notes">
+		Aujourd'hui les fournisseurs de stockage proposent de nombreuses options en plus du simple stockage. GitHub permet d'executer des actions sur le code (déploiements, compilations, etc), de faire des analyses de sécurité, de tenir une liste des tâches, et bien d'autres fonctions.
+		GitHub affichera, sous la liste des fichiers et dossiers, le contenu du fichier "README.md" du dossier courant. C'est particulièrement pratique pour créer une page d'accueil de votre projet.
+	</aside>
+</section>
+
+<section>
+	<h3>git</h3>
+	<h4>Avec Visual Studio Code</h4>
+	<p>Visual Studio Code détecte automatiquement les changements dans un dépôt local</p>
+	<p>Ils sont affichés dans le menu &nbsp; <img src="assets/vscode_git.png"> </p>
+	<img src="assets/vscode_git_2.svg" width="800px" style="text-align:center;">
+	<p>Si aucun fichier n'est ajouté au commit, VS Code proposera d'ajouter tous les fichiers modifiés</p>
+	<aside class="notes">
+		L'interface de VS Code pour gérer git est très pratique, n'hésitez pas à l'utiliser. Toutefois, il faut connaître les commandes git pour comprendre ce que l'ont fait et régler des situations que VS Code ne permet parfois pas de résoudre.
+	</aside>
+</section>
+
+<section>
+	<h3>git</h3>
+	<h4>Resources</h4>
+	<br>
+	<p>Site officiel : <a href="https://git-scm.com/">https://git-scm.com/</a></p>
+	<p>Livre officiel, gratuit : <a href="https://git-scm.com/book/en/v2">https://git-scm.com/book/en/v2</a></p>
+	<p>Tutoriel simple, pas à pas, partant de zéro : <a href="https://www.w3schools.com/git/default.asp">https://www.w3schools.com/git/default.asp</a></p>
+	<p>Et aussi un très grand nombre d'autres ressources en ligne, textes, vidéos, slides, etc</p>
+</section>
