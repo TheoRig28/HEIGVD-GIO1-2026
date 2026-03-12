@@ -34,7 +34,7 @@ Le module est évalué en session d’examen, pendant le semestre à la fin du m
 Le projet consiste à développer, par groupe, une application web mettant en application les notions vue en cours.
 
 Le projet devra :
-- Se présenter sous le forme d'une application web, utilisant HTML, CSS et JavaScript
+- Se présenter sous la forme d'une application web, utilisant HTML, CSS et JavaScript
 - Utiliser la librairie VueJS
 - Utiliser au moins une librairie de mapping (leaflet, openlayers, cesiumJS ou Giro3D)
 - Présenter des données issues d'une API externe (par exemple https://docs.geo.admin.ch/ ou similaire)
