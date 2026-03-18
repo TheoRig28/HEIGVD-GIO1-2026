@@ -416,7 +416,6 @@
     </code></pre>
 </section>
 
-
 <section>
 	<h3>Vue.js</h3>
 	<h4>Les composants - Props</i></h4>
@@ -460,4 +459,65 @@
 	<p>Ceci afin d'éviter qu'un composant enfant ne modifie l'état de son parent (effet de bord). Si on doit modifier la valeur d'une propriété, on peut soit créer une propriété interne à l'objet, ou utiliser une <i>computed property</i>.</p>
 
 </section>
+
+<section>
+	<h3>Vue.js</h3>
+	<h4>Les composants - Événements</i></h4>
+	<p>Comment un composant enfant peut-il signaler un changement a un composant parent ?</p>
+</section>
+
+<section>
+	<h3>Vue.js</h3>
+	<h4>Les composants - Événements</i></h4>
+	<p>Le composant enfant peut envoyer des événements à l'aide de <code>$emit</code><br> Cela peut être fait dans la partie template</p>
+	<pre style="width:100%"><code data-trim data-noescape class="language-html">
+		&lt;button @click="$emit('someEvent')"&gt;Click Me&lt;/button&gt;
+    </code></pre>
+	<p>Ou dans la partie script</p>
+	<pre style="width:100%"><code data-trim data-noescape class="language-js">
+		export default {
+			methods: {
+				submit() {
+					this.$emit('someEvent')
+				}
+			}
+		}
+    </code></pre>
+</section>
+
+<section>
+	<h3>Vue.js</h3>
+	<h4>Les composants - Événements</i></h4>
+	<p>Le composant parent écoute un événement à l'aide de son nom</p>
+	<pre style="width:100%"><code data-trim data-noescape class="language-html">		
+		&lt;childComponent @some-event="callback" /&gt;
+    </code></pre>
+	<p>Où <code>callback</code> est une méthode du composant parent.</p>
+	<p>A noter que l'élément émit est écrit en camelCase (<code>someEvent</code>) et l'attribut est noté en kebab-case (<code>some-event</code>). Vue fait automatiquement la conversion.</p>
+</section>
+
+<section>
+	<h3>Vue.js</h3>
+	<h4>Les composants - Événements</i></h4>
+	<p>Les événements peuvent avoir des arguments</p>
+	<pre style="width:100%"><code data-trim data-noescape class="language-html">		
+		&lt;button @click="$emit('increaseBy', 1)"&gt;Increase by 1&lt;/button&gt;
+    </code></pre>
+	<p>Et les argument sont passés à la fonction de l'objet parent</p>
+	<pre style="width:100%"><code data-trim data-noescape class="language-html">		
+		&lt;MyButton @increase-by="(n) => count += n" /&gt;
+    </code></pre>
+</section>
+
+<section>                          
+	<h3>Vue.js</h3>
+	<h4>Conclusion</h4>
+	<p>Quelques info supplémentaires :</p>
+	<ul>
+		<li>Vue possède deux syntaxes principales, dites <i>Options</i> et <i>Composition</i>. Nous avons vu la syntaxe <i>Options</i>. Vous pourriez lire une syntaxe différente sur internet.</li>
+		<li>Vue a beaucoup évolué ces dernières années. Nous avons vu la syntaxe de <i>Vue 3</i>. Certaines ressources sur internet pourraient utiliser d'anciennes versions.</li>
+		<li>Nous n'avons fait qu'un survol des principaux concepts de Vue, il y a beaucoup de sujet que nous n'avons pas vu. N'hésitez pas à lire la documentation officielle : <a href="https://vuejs.org/guide">https://vuejs.org/guide</a></li>
+	</ul>
+</section>
+
 
